@@ -6,7 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 lib
 
+# remove dist file
 dist
+
 # Runtime data
 pids
 *.pid
