@@ -4,29 +4,29 @@
       "id": "1",
       "firstname": "sina",
       "age": 25,
-      "companyId": 1
+      "companyId": "2"
     },
     {
       "id": "2",
       "firstname": "saeed",
       "age": 25,
-      "companyId": 2
+      "companyId": "2"
     },
     {
       "id": "3",
       "firstname": "sahar",
       "age": 25,
-      "companyId": 1
+      "companyId": "1"
     }
   ],
   "companies": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Apple",
       "description": "iPhone"
     },
     {
-      "id": 1,
+      "id": "2",
       "name": "Google",
       "description": "Search Engin"
     }
