@@ -2,7 +2,8 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLSchema
+  GraphQLSchema,
+  GraphQLList
 } from "graphql";
 import axios from "axios";
 
@@ -11,7 +12,23 @@ const UserType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLString },
     firstname: { type: GraphQLString },
-    age: { type: GraphQLInt }
+    age: { type: GraphQLInt },
+    // companies: { type: GraphQLList(CompanyType) }
+  }
+});
+
+const CompanyType = new GraphQLObjectType({
+  name: "Company",
+  fields: {
+    id: {
+      type: GraphQLString
+    },
+    name: {
+      type: GraphQLString
+    },
+    description: {
+      type: GraphQLString
+    }
   }
 });
 
