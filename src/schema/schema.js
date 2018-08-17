@@ -49,10 +49,23 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLString
         }
       },
-      resolve(value, args) {
+      resolve(parentValue, args) {
         return userRequest(args.id)
           .then(resp => resp.data)
           .catch(err => err);
+      }
+    },
+    company: {
+      type: CompanyType,
+      args: {
+        id: {
+          type: GraphQLString,
+        }
+      },
+      resolve(parentValue, args) {
+        return companyRequest(args.id)
+          .then(resp => resp.data)
+          .catch(err => err)
       }
     }
   }
