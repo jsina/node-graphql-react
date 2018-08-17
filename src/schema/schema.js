@@ -5,39 +5,10 @@ import {
   GraphQLSchema,
   GraphQLList
 } from "graphql";
-import axios from "axios";
 
-const CompanyType = new GraphQLObjectType({
-  name: "Company",
-  fields: {
-    id: {
-      type: GraphQLString
-    },
-    name: {
-      type: GraphQLString
-    },
-    description: {
-      type: GraphQLString
-    }
-  }
-});
-
-const UserType = new GraphQLObjectType({
-  name: "User",
-  fields: {
-    id: { type: GraphQLString },
-    firstname: { type: GraphQLString },
-    age: { type: GraphQLInt },
-    company: {
-      type: CompanyType,
-      resolve(parentValue, args) {
-        return companyRequest(parentValue.companyId)
-          .then(resp => resp.data)
-          .catch(err => err);
-      }
-    }
-  }
-});
+import { userRequest, companyRequest } from '../requests/requests';
+import UserType from './UserType';
+import CompanyType from './CompanyType';
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQuery",
@@ -49,22 +20,23 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLString
         }
       },
-      resolve(value, args) {
+      resolve(parentValue, args) {
         return userRequest(args.id)
           .then(resp => resp.data)
           .catch(err => err);
       }
+    },
+    company: {
+      type: CompanyType,
+      args: { id: { type: GraphQLString }},
+      resolve(parentValue, args) {
+        return companyRequest(args.id)
+          .then(resp => resp.data)
+          .catch(err => err)
+      }
     }
   }
 });
-
-function userRequest(id) {
-  return axios.get(`http://localhost:4000/users/${id}`);
-}
-
-function companyRequest(id) {
-  return axios.get(`http://localhost:4000/companies/${id}`);
-}
 
 export default new GraphQLSchema({
   query: RootQuery
