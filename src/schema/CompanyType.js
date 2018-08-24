@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList } from "graphql";
 import UserType from "./UserType";
 
-import { companyUsers } from "../requests/requests";
+import { companyUsers } from "../requests/queries";
 
 const CompanyType = new GraphQLObjectType({
   name: "Company",
@@ -16,7 +16,7 @@ const CompanyType = new GraphQLObjectType({
       type: GraphQLString
     },
     users: {
-      type: new GraphQLList(UserType),
+      type: GraphQLList(UserType),
       resolve(parentValue, args) {
         return companyUsers(parentValue.id)
           .then(resp => resp.data)

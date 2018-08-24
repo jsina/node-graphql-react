@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
 
-import { companyRequest } from '../requests/requests';
+import { companyRequest } from '../requests/queries';
 import CompanyType from './CompanyType';
 
 const UserType = new GraphQLObjectType({
