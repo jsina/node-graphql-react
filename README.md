@@ -20,7 +20,7 @@ and for running server:
 after running server you could access the `graphiQL` dashboard for writing query to the server on `http://localhost:3000/graphql`
 
 ## Sample query with graphql
-`
+```
 {
   user(id: "3") {
     id
@@ -33,8 +33,10 @@ after running server you could access the `graphiQL` dashboard for writing query
     }
   }
 }
-`
-`
+```
+
+```
+
 {
  	apple: company(id: "1") {
   	...companyDetails
@@ -49,4 +51,4 @@ fragment companyDetails on Company {
   name
   description
 }
-`
+```
