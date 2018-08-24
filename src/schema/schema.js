@@ -9,9 +9,10 @@ import {
 } from "graphql";
 
 import { userRequest, companyRequest } from "../requests/queries";
-import { addUser, addUsers } from "../requests/mutations";
+import { addUser, addUsers, deleteUser } from "../requests/mutations";
 import UserType from "./UserType";
 import CompanyType from "./CompanyType";
+import SuccessResponse from "./SuccessResponse";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQuery",
@@ -43,11 +44,11 @@ const RootQuery = new GraphQLObjectType({
 
 const RootMutation = new GraphQLObjectType({
   name: "RootMutation",
-  fields:() => ({
+  fields: () => ({
     addUser: {
       type: UserType,
       args: {
-        user: {type: userInputType}
+        user: { type: userInputType }
       },
       resolve(parentValue, args) {
         return addUser(args)
@@ -65,7 +66,20 @@ const RootMutation = new GraphQLObjectType({
       resolve(parentValue, args) {
         return addUsers(args.users)
           .then(res => {
-            return res.map(result => result.data)
+            return res.map(result => result.data);
+          })
+          .catch(err => err);
+      }
+    },
+    deleteUser: {
+      type: SuccessResponse,
+      args: {
+        userId: { type: GraphQLString }
+      },
+      resolve(parentValue, args) {
+        return deleteUser(args.userId)
+          .then(res => {
+            return { message: "successful" };
           })
           .catch(err => err);
       }

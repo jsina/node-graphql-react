@@ -18,3 +18,8 @@ export function addUsers(users) {
     );
     return Promise.all(promises)
 }
+
+export function deleteUser(userId) {
+    console.log(userId)
+    return axios.delete(`http://localhost:4000/users/${userId}`);
+}
