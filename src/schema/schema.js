@@ -9,7 +9,12 @@ import {
 } from "graphql";
 
 import { userRequest, companyRequest } from "../requests/queries";
-import { addUser, addUsers, deleteUser } from "../requests/mutations";
+import {
+  addUser,
+  addUsers,
+  deleteUser,
+  updateUser
+} from "../requests/mutations";
 import UserType from "./UserType";
 import CompanyType from "./CompanyType";
 import SuccessResponse from "./SuccessResponse";
@@ -63,8 +68,8 @@ const RootMutation = new GraphQLObjectType({
           type: new GraphQLList(userInputType)
         }
       },
-      resolve(parentValue, args) {
-        return addUsers(args.users)
+      resolve(parentValue, { users }) {
+        return addUsers(users)
           .then(res => {
             return res.map(result => result.data);
           })
@@ -74,13 +79,25 @@ const RootMutation = new GraphQLObjectType({
     deleteUser: {
       type: SuccessResponse,
       args: {
-        userId: { type: GraphQLString }
+        userId: { type: GraphQLNonNull(GraphQLString) }
       },
-      resolve(parentValue, args) {
-        return deleteUser(args.userId)
+      resolve(parentValue, { userId }) {
+        return deleteUser(userId)
           .then(res => {
             return { message: "successful" };
           })
+          .catch(err => err);
+      }
+    },
+    updateUser: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLString)},
+        user: { type: userInputType },
+      },
+      resolve(parentValue, { id, user }) {
+        return updateUser(id, user)
+          .then(res => res.data)
           .catch(err => err);
       }
     }
@@ -91,7 +108,7 @@ const userInputType = new GraphQLInputObjectType({
   name: "userInput",
   fields: {
     firstname: { type: GraphQLNonNull(GraphQLString) },
-    age: { type: GraphQLNonNull(GraphQLInt) },
+    age: { type: GraphQLInt },
     companyId: { type: GraphQLString }
   }
 });

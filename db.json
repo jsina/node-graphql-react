@@ -8,9 +8,13 @@
     },
     {
       "id": "2",
-      "firstname": "saeed",
-      "age": 25,
-      "companyId": "2"
+      "firstname": "sina",
+      "age": 23,
+      "companyId": "2",
+      "user": {
+        "firstname": "fd",
+        "age": 23
+      }
     },
     {
       "id": "3",
